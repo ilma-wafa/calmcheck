@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CalmCheck</title>
+
+    <style>
+        body {
+            background-color: #f5e6d3; /* warm, cozy */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 80px;
+            color: #3a2f2f;
+        }
+
+        h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #5a4a4a;
+            margin-bottom: 40px;
+        }
+
+        .menu button {
+            display: block;
+            margin: 12px auto;
+            padding: 12px 24px;
+            font-size: 15px;
+            border: none;
+            border-radius: 6px;
+            background-color: #e7d3b1;
+            color: #3a2f2f;
+            cursor: pointer;
+        }
+
+        .menu button:hover {
+            background-color: #dcc39a;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CalmCheck</h1>
+    <p>A calm space to pause and be honest</p>
+    
+    {% if response %}
+    <p><strong>{{ response }}</strong></p>
+    {% endif %}
+
+    <div class="menu">
+        <form method="post" action="/feel">
+            <button type="submit" name="emotion" value="sad">
+            I feel sad
+            </button>
+        </form>
+        <button>I feel anxious</button>
+        <button>I don’t know</button>
+        <button>Exit</button>
+    </div>
+
+</body>
+</html>
