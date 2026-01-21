@@ -72,30 +72,38 @@
         </div>
 
     <script>
-        function startChat(emotion) {
+
+            function startChat(emotion) {
             document.getElementById("landing").style.display = "none";
             document.getElementById("chat").style.display = "block";
             document.getElementById("followUp").style.display = "none";
 
-                const messageMap = {
-                    sad: "I’m really glad you told me that. You don’t have to carry it alone.",
-                    overwhelmed: "That sounds like a lot to hold at once. Let’s slow things down together.",
-                    okay: "Thanks for checking in with yourself. Want to talk a bit more?",
-                    unknown: "It’s okay not to have the words right now. We can take this gently."
-                };
+            fetch("/start-chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ emotion: emotion })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("botMessage").innerText = data.message;
 
-                document.getElementById("botMessage").innerText = messageMap[emotion];
-
-                // Show follow-up after a short pause
                 setTimeout(() => {
                     document.getElementById("followUp").style.display = "block";
                 }, 800);
+            });
             }
 
             function continueChat() {
-                document.getElementById("botMessage").innerText =
-                    "Take your time. What’s been on your mind lately?";
-                document.getElementById("followUp").style.display = "none";
+                fetch("/continue-chat", {
+                    method: "POST"
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("botMessage").innerText = data.message;
+                    document.getElementById("followUp").style.display = "none";
+                });
             }
 
             function exitChat() {
